@@ -1,10 +1,15 @@
-class CalculationHistory:
+class HistoryManager:
     def __init__(self):
-        self._history = []
+        self.history = []
 
-    def add_calculation(self, calculation):
-        self._history.append(str(calculation))
+    def add(self, calc):
+        self.history.append(calc)
 
-    def get_history(self):
-        return self._history
+    def get_last(self):
+        return self.history[-1] if self.history else None
+
+    def clear(self):
+        self.history = []
+
+# ✅ Ensure this is defined and not commented out!
 
