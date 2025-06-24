@@ -1,15 +1,8 @@
 class HistoryManager:
-    def __init__(self):
+    def __init__(self, file_path="history.csv"):
+        self.file_path = file_path
         self.history = []
+        self.undo_stack = []
+        self.redo_stack = []
 
-    def add(self, calc):
-        self.history.append(calc)
-
-    def get_last(self):
-        return self.history[-1] if self.history else None
-
-    def clear(self):
-        self.history = []
-
-# ✅ Ensure this is defined and not commented out!
-
+    # (Make sure all methods in this class use self.file_path)
