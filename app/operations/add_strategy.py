@@ -1,6 +1,3 @@
-from app.operation_strategy import OperationStrategy
-
-class AddStrategy(OperationStrategy):
-    def execute(self, a, b):
+class AddStrategy:
+    def calculate(self, a, b):
         return a + b
-
