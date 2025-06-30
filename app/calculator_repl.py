@@ -1,9 +1,9 @@
-from app.history import History
+from app.history import HistoryManager
 from app.calculation_factory import CalculationFactory
 
 class CalculatorFacade:
     def __init__(self):
-        self.history_manager = History()
+        self.history_manager = HistoryManager()
         self.history = self.history_manager.history
 
     def execute_command(self, input_str):

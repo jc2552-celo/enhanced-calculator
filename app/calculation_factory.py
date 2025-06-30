@@ -3,6 +3,23 @@ from app.operations import Addition, Subtraction, Multiplication, Division, Powe
 
 class CalculationFactory:
     @staticmethod
+    def create(a: float, b: float, operator_str: str):
+        operations = {
+            '+': Addition(),
+            '-': Subtraction(),
+            '*': Multiplication(),
+            '/': Division(),
+            '^': Power(),
+            'root': Root()
+        }
+
+        if operator_str not in operations:
+            raise ValueError(f"Unsupported operator: {operator_str}")
+
+        operation = operations[operator_str]
+        return Calculation(a, b, operation)
+
+    @staticmethod
     def create_from_input(input_str: str):
         try:
             parts = input_str.strip().split()
@@ -13,20 +30,7 @@ class CalculationFactory:
             a = float(a_str)
             b = float(b_str)
 
-            operations = {
-                '+': Addition(),
-                '-': Subtraction(),
-                '*': Multiplication(),
-                '/': Division(),
-                '^': Power(),
-                'root': Root()
-            }
-
-            if operator_str not in operations:
-                raise ValueError(f"Unsupported operator: {operator_str}")
-
-            operation = operations[operator_str]
-            return Calculation(a, b, operation)
+            return CalculationFactory.create(a, b, operator_str)
 
         except Exception as e:
             raise ValueError(f"Invalid input: {e}")
