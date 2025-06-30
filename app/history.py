@@ -1,35 +1,39 @@
+import pandas as pd
+
 class HistoryManager:
-    def __init__(self, file_path):
+    def __init__(self, file_path="history.csv"):
         self.file_path = file_path
-        self.history = []
+        try:
+            self.df = pd.read_csv(file_path)
+        except FileNotFoundError:
+            self.df = pd.DataFrame(columns=["operation", "a", "b", "result"])
+        self.undo_stack = []
         self.redo_stack = []
 
     def add_entry(self, operation, a, b, result):
-        self.history.append((operation, a, b, result))
+        entry = {"operation": operation, "a": a, "b": b, "result": result}
+        self.df = pd.concat([self.df, pd.DataFrame([entry])], ignore_index=True)
+        self.undo_stack.append(self.df.copy())
         self.redo_stack.clear()
 
     def save_history(self):
-        with open(self.file_path, 'w') as f:
-            for entry in self.history:
-                f.write(','.join(map(str, entry)) + '\n')
+        self.df.to_csv(self.file_path, index=False)
 
     def load_history(self):
-        try:
-            with open(self.file_path, 'r') as f:
-                self.history = [tuple(line.strip().split(',')) for line in f]
-        except FileNotFoundError:
-            self.history = []
+        self.df = pd.read_csv(self.file_path)
 
     def undo(self):
-        if self.history:
-            last_entry = self.history.pop()
-            self.redo_stack.append(last_entry)
+        if self.undo_stack:
+            self.redo_stack.append(self.df.copy())
+            self.df = self.undo_stack.pop()
 
     def redo(self):
         if self.redo_stack:
-            self.history.append(self.redo_stack.pop())
+            self.undo_stack.append(self.df.copy())
+            self.df = self.redo_stack.pop()
 
     def clear(self):
-        self.history.clear()
+        self.undo_stack.append(self.df.copy())
+        self.df = pd.DataFrame(columns=["operation", "a", "b", "result"])
         self.redo_stack.clear()
 

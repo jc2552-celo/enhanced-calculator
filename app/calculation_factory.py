@@ -1,21 +1,19 @@
-from app.operations.add_strategy import AddStrategy
-from app.operations.subtract_strategy import SubtractStrategy
-from app.operations.multiply_strategy import MultiplyStrategy
-from app.operations.divide_strategy import DivideStrategy
-
-operations_map = {
-    "add": AddStrategy,
-    "subtract": SubtractStrategy,
-    "multiply": MultiplyStrategy,
-    "divide": DivideStrategy
-}
+from app.operations import Addition, Subtraction, Multiplication, Division, Power, Root
+from app.calculation import Calculation
 
 class CalculationFactory:
     @staticmethod
-    def create(a, b, operation):
-        if operation not in operations_map:
-            raise KeyError(f"Unsupported operation: {operation}")
-        strategy_class = operations_map[operation]
-        strategy = strategy_class()
-        return strategy.calculate(a, b)
+    def create(a: float, b: float, operator: str) -> Calculation:
+        operator_map = {
+            '+': Addition(),
+            '-': Subtraction(),
+            '*': Multiplication(),
+            '/': Division(),
+            '^': Power(),
+            'root': Root()
+        }
 
+        if operator not in operator_map:
+            raise ValueError(f"Unsupported operator: {operator}")
+
+        return Calculation(a, b, operator_map[operator])

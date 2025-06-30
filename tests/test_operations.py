@@ -1,25 +1,28 @@
-from app.operations.add_strategy import AddStrategy
-from app.operations.subtract import SubtractStrategy
-from app.operations.multiply import MultiplyStrategy
-from app.operations.divide import DivideStrategy
+import pytest
+from app.operations import Addition, Subtraction, Multiplication, Division, Power, Root
 
-def test_add():
-    assert AddStrategy().calculate(2, 3) == 5
-    assert AddStrategy().calculate(-1, 1) == 0
-    assert AddStrategy().calculate(0, 0) == 0
+def test_addition():
+    assert Addition().execute(5, 3) == 8
 
-def test_subtract():
-    assert SubtractStrategy().calculate(5, 2) == 3
-    assert SubtractStrategy().calculate(10, 10) == 0
-    assert SubtractStrategy().calculate(0, 5) == -5
+def test_subtraction():
+    assert Subtraction().execute(5, 3) == 2
 
-def test_multiply():
-    assert MultiplyStrategy().calculate(3, 4) == 12
-    assert MultiplyStrategy().calculate(0, 5) == 0
-    assert MultiplyStrategy().calculate(-2, 3) == -6
+def test_multiplication():
+    assert Multiplication().execute(5, 3) == 15
 
-def test_divide():
-    assert DivideStrategy().calculate(10, 2) == 5
-    assert DivideStrategy().calculate(9, 3) == 3
-    assert DivideStrategy().calculate(5, 2) == 2.5
+def test_division():
+    assert Division().execute(10, 2) == 5
 
+def test_division_by_zero():
+    with pytest.raises(ZeroDivisionError):
+        Division().execute(10, 0)
+
+def test_power():
+    assert Power().execute(2, 3) == 8
+
+def test_root():
+    assert Root().execute(27, 3) == 3
+
+def test_zeroth_root():
+    with pytest.raises(ValueError):
+        Root().execute(27, 0)

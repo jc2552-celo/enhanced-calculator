@@ -1,11 +1,7 @@
-# app/calculator_config.py
+from dotenv import load_dotenv
+import os
 
-# Path to the history file used to store past calculations
-HISTORY_FILE = "data/history.csv"
+load_dotenv()
 
-# Path to the log file for recording application events (if used)
-LOG_FILE = "logs/app.log"
-
-# List of supported operations
-ALLOWED_OPERATIONS = ["add", "subtract", "multiply", "divide", "power", "sqrt"]
-
+def get_history_file():
+    return os.getenv("HISTORY_FILE", "calc_history.csv")

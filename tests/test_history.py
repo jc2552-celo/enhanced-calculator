@@ -2,7 +2,7 @@
 
 import os
 import pandas as pd
-from app.history import HistoryManager
+from app.history import CalculationHistory
 
 def test_add_entry_and_history(tmp_path):
     file_path = tmp_path / "history.csv"

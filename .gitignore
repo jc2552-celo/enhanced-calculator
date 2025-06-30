@@ -1,5 +1,17 @@
+# Byte-compiled / cache files
 __pycache__/
-*.pyc
-.venv/
-env/
+*.py[cod]
+*.pyo
+
+# Virtual environment
 venv/
+
+# Environment variables
+.env
+
+# CSV/Output files
+calc_history.csv
+
+# OS metadata
+.DS_Store
+Thumbs.db

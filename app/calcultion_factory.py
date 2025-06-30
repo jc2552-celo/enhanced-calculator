@@ -1,10 +1,19 @@
+from app.operations import Addition, Subtraction, Multiplication, Division, Power, Root
 from app.calculation import Calculation
-from app.operations import operations_map
 
 class CalculationFactory:
     @staticmethod
-    def create_calculation(operation, a, b):
-        strategy_class = operations_map.get(operation)
-        if not strategy_class:
-            raise ValueError(f"Unsupported operation: {operation}")
-        return Calculation(strategy_class(), a, b)
+    def create(a: float, b: float, operator: str) -> Calculation:
+        operator_map = {
+            '+': Addition(),
+            '-': Subtraction(),
+            '*': Multiplication(),
+            '/': Division(),
+            '^': Power(),
+            'root': Root()
+        }
+
+        if operator not in operator_map:
+            raise ValueError(f"Unsupported operator: {operator}")
+
+        return Calculation(a, b, operator_map[operator])

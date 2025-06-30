@@ -1,16 +1,36 @@
-from app.operations.add import AddStrategy
-from app.operations.subtract import SubtractStrategy
-from app.operations.multiply import MultiplyStrategy
-from app.operations.divide import DivideStrategy
-from app.operations.power import PowerStrategy
-from app.operations.root import RootStrategy
+from abc import ABC, abstractmethod
 
-operations_map = {
-    "add": AddStrategy,
-    "subtract": SubtractStrategy,
-    "multiply": MultiplyStrategy,
-    "divide": DivideStrategy,
-    "power": PowerStrategy,
-    "root": RootStrategy
-}
+# Strategy Interface
+class OperationStrategy(ABC):
+    @abstractmethod
+    def execute(self, a: float, b: float) -> float:
+        pass
 
+# Concrete Strategies
+class Addition(OperationStrategy):
+    def execute(self, a: float, b: float) -> float:
+        return a + b
+
+class Subtraction(OperationStrategy):
+    def execute(self, a: float, b: float) -> float:
+        return a - b
+
+class Multiplication(OperationStrategy):
+    def execute(self, a: float, b: float) -> float:
+        return a * b
+
+class Division(OperationStrategy):
+    def execute(self, a: float, b: float) -> float:
+        if b == 0:
+            raise ZeroDivisionError("Cannot divide by zero.")
+        return a / b
+
+class Power(OperationStrategy):
+    def execute(self, a: float, b: float) -> float:
+        return a ** b
+
+class Root(OperationStrategy):
+    def execute(self, a: float, b: float) -> float:
+        if b == 0:
+            raise ValueError("Zeroth root is undefined.")
+        return a ** (1 / b)
