@@ -1,25 +1,20 @@
-from datetime import datetime
 import pandas as pd
+from datetime import datetime
 
-class HistoryManager:
+class History:
     def __init__(self):
         self.history = pd.DataFrame(columns=["timestamp", "operation", "result"])
-        self.load_previous_history()
 
-    def load_previous_history(self):
-        try:
-            self.history = pd.read_csv("data/history.csv")
-        except FileNotFoundError:
-            pass
-
-    def add_to_history(self, operation_str, result):
+    def add(self, operation_str: str, result: float):
         new_row = {
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now(),
             "operation": operation_str,
-            "result": result
+            "result": result  # ✅ lowercase key
         }
         self.history = pd.concat([self.history, pd.DataFrame([new_row])], ignore_index=True)
-        self.save_history()
 
-    def save_history(self):
-        self.history.to_csv("data/history.csv", index=False)
+    def __len__(self):
+        return len(self.history)
+
+    def __str__(self):
+        return self.history.to_string(index=False)
