@@ -1,18 +1,32 @@
 from app.calculation import Calculation
 from app.operations import Addition, Subtraction, Multiplication, Division, Power, Root
-from app.operation_strategy import OperationStrategy
 
 class CalculationFactory:
     @staticmethod
-    def create(a: float, b: float, operator: str) -> Calculation:
-        operation_map: dict[str, OperationStrategy] = {
-            '+': Addition(),
-            '-': Subtraction(),
-            '*': Multiplication(),
-            '/': Division(),
-            '^': Power(),
-            'root': Root()  # ✅ Add this line to support root
-        }
-        if operator not in operation_map:
-            raise ValueError(f"Unsupported operator: {operator}")
-        return Calculation(a, b, operation_map[operator])
+    def create_from_input(input_str: str):
+        try:
+            parts = input_str.strip().split()
+            if len(parts) != 3:
+                raise ValueError("Input must be in format: <operator> <a> <b>")
+
+            operator_str, a_str, b_str = parts
+            a = float(a_str)
+            b = float(b_str)
+
+            operations = {
+                '+': Addition(),
+                '-': Subtraction(),
+                '*': Multiplication(),
+                '/': Division(),
+                '^': Power(),
+                'root': Root()
+            }
+
+            if operator_str not in operations:
+                raise ValueError(f"Unsupported operator: {operator_str}")
+
+            operation = operations[operator_str]
+            return Calculation(a, b, operation)
+
+        except Exception as e:
+            raise ValueError(f"Invalid input: {e}")
