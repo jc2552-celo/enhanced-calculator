@@ -1,28 +1,23 @@
 import pytest
-from app.operations import Addition, Subtraction, Multiplication, Division, Power, Root
+from calcapp.operations import Addition, Subtraction, Multiplication, Division
 
 def test_addition():
-    assert Addition().execute(5, 3) == 8
+    calc = Addition(3, 7)
+    assert calc.execute() == 10
 
 def test_subtraction():
-    assert Subtraction().execute(5, 3) == 2
+    calc = Subtraction(10, 4)
+    assert calc.execute() == 6
 
 def test_multiplication():
-    assert Multiplication().execute(5, 3) == 15
+    calc = Multiplication(5, 6)
+    assert calc.execute() == 30
 
 def test_division():
-    assert Division().execute(10, 2) == 5
+    calc = Division(12, 4)
+    assert calc.execute() == 3
 
 def test_division_by_zero():
-    with pytest.raises(ZeroDivisionError):
-        Division().execute(10, 0)
+    with pytest.raises(ValueError, match="Cannot divide by zero."):
+        Division(5, 0).execute()
 
-def test_power():
-    assert Power().execute(2, 3) == 8
-
-def test_root():
-    assert Root().execute(27, 3) == 3
-
-def test_zeroth_root():
-    with pytest.raises(ValueError):
-        Root().execute(27, 0)
