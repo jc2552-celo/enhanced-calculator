@@ -3,7 +3,7 @@ import os
 
 load_dotenv()
 
-def get_history_file():
-    return os.getenv("HISTORY_FILE", "data/history.csv")  # <-- fix default here
+HISTORY_FILE = os.getenv("HISTORY_FILE", "data/history.csv")  # <- Match test expectation
 
-HISTORY_FILE = get_history_file()  # <-- ensures compatibility with tests
+def get_history_file():
+    return HISTORY_FILE
