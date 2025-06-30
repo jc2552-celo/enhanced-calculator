@@ -5,3 +5,5 @@ load_dotenv()
 
 def get_history_file():
     return os.getenv("HISTORY_FILE", "calc_history.csv")
+
+HISTORY_FILE = get_history_file()
