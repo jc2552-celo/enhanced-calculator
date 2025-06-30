@@ -13,3 +13,7 @@ class Calculation:
 
     def __str__(self):
         return f"Calculation: {self.a} {self.operation.__class__.__name__} {self.b} = {self.result}"
+
+    @classmethod
+    def create(cls, a: float, b: float, operation: OperationStrategy):
+        return cls(a, b, operation)
