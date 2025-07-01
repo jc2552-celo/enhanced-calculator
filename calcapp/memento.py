@@ -1,33 +1,23 @@
-class Memento:
-    def __init__(self, state):
-        self._state = state
-
-    def get_saved_state(self):
-        return self._state
-
 class Caretaker:
     def __init__(self):
-        self._undo_stack = []
+        self._history = []
         self._redo_stack = []
 
-    def save(self, state):
-        self._undo_stack.append(Memento(state))
-        self._redo_stack.clear()
+    def save(self, operation, a, b, result):
+        self._history.append((operation, a, b, result))
+        self._redo_stack.clear()  # Clear redo stack on new save
 
     def undo(self):
-        if not self._undo_stack:
+        if not self._history:
             return None
-        memento = self._undo_stack.pop()
-        self._redo_stack.append(memento)
-        return memento.get_saved_state()
+        state = self._history.pop()
+        self._redo_stack.append(state)
+        return state
 
     def redo(self):
         if not self._redo_stack:
             return None
-        memento = self._redo_stack.pop()
-        self._undo_stack.append(memento)
-        return memento.get_saved_state()
-
-    def get_history(self):
-        return [m.get_saved_state() for m in self._undo_stack]
+        state = self._redo_stack.pop()
+        self._history.append(state)
+        return state
 
