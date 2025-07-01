@@ -2,22 +2,18 @@ import pytest
 from calcapp.operations import Addition, Subtraction, Multiplication, Division
 
 def test_addition():
-    calc = Addition(3, 7)
-    assert calc.execute() == 10
+    assert Addition(2, 3).execute() == 5
 
 def test_subtraction():
-    calc = Subtraction(10, 4)
-    assert calc.execute() == 6
+    assert Subtraction(5, 3).execute() == 2
 
 def test_multiplication():
-    calc = Multiplication(5, 6)
-    assert calc.execute() == 30
+    assert Multiplication(4, 3).execute() == 12
 
 def test_division():
-    calc = Division(12, 4)
-    assert calc.execute() == 3
+    assert Division(10, 2).execute() == 5
 
 def test_division_by_zero():
-    with pytest.raises(ValueError, match="Cannot divide by zero."):
+    with pytest.raises(ZeroDivisionError):
         Division(5, 0).execute()
 

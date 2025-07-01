@@ -1,5 +1,5 @@
-from calcapp.operations import Addition, Subtraction, Multiplication, Division
-from calcapp.exceptions import OperationError
+from .operations import Addition, Subtraction, Multiplication, Division, Power, Root
+from .exceptions import OperationError
 
 class CalculationFactory:
     @staticmethod
@@ -12,6 +12,10 @@ class CalculationFactory:
             return Multiplication(a, b)
         elif operation == "divide":
             return Division(a, b)
+        elif operation == "power":
+            return Power(a, b)
+        elif operation == "root":
+            return Root(a, b)
         else:
             raise OperationError(f"Unsupported operation: {operation}")
 
